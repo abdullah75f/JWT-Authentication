@@ -10,20 +10,16 @@ const users = [];
 
 const posts = [
   {
-    username: "kyle",
+    username: "Abdullah",
     title: "Post 1",
   },
   {
-    username: "Jim",
+    username: "Farid",
     title: "Post 2",
   },
 ];
 app.get("/posts",authenticateToken, (req, res) => {
-  try {
-    res.status(200).json(posts);
-  } catch (error) {
-    res.status(400).send();
-  }
+      res.json(posts.filter(post=> post.username ===req.user.name));
 });
 
 // registration or sign up
