@@ -30,8 +30,6 @@ app.post("/users", async (req, res) => {
   try {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    console.log(salt);
-    console.log(hashedPassword);
     const user = { name: req.body.name, password: hashedPassword };
     users.push(user);
     res.status(200).send("Added as a new user");
@@ -52,8 +50,25 @@ app.post("/users/login", async (req, res) => {
   }
   try {
     if (await bcrypt.compare(req.body.password, user.password)) {
-      res.status(400).send("Successfully Logged in");
-    } else {
+      jwt.sign(user,process.env.ACCESS_TOKEN_SECRET)
+
+
+
+
+
+
+
+      // res.status(400).send("Successfully Logged in");
+
+
+    } 
+    
+    
+    
+    
+    
+    
+    else {
       res.status(400).send("Incorrect Credential !");
     }
   } catch (error) {
