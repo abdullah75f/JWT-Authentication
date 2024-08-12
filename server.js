@@ -52,6 +52,7 @@ app.post("/users/login", async (req, res) => {
     if (await bcrypt.compare(req.body.password, user.password)) {
       const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
       res.json({ accessToken: accessToken });
+      
       // res.status(400).send("Successfully Logged in");
     } else {
       res.status(400).send("Incorrect Credential !");
