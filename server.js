@@ -18,7 +18,7 @@ const posts = [
     title: "Post 2",
   },
 ];
-app.get("/posts", (req, res) => {
+app.get("/posts",authenticateToken, (req, res) => {
   try {
     res.status(200).json(posts);
   } catch (error) {
@@ -52,7 +52,7 @@ app.post("/users/login", async (req, res) => {
     if (await bcrypt.compare(req.body.password, user.password)) {
       const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
       res.json({ accessToken: accessToken });
-      
+
       // res.status(400).send("Successfully Logged in");
     } else {
       res.status(400).send("Incorrect Credential !");
@@ -61,6 +61,20 @@ app.post("/users/login", async (req, res) => {
     res.status(500).send("Server Error!");
   }
 });
+
+function authenticateToken(req,res,next){
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if(token === null) return res.sendStatus(401);
+
+  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET, (err,user)=>{
+    if(err) return res.sendStatus(403);
+    req.user = user; 
+    next();
+  });
+
+
+}
 
 app.get("/users", (req, res) => {
   res.status(200).json(users);
