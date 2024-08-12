@@ -34,13 +34,13 @@ app.post("/users", async (req, res) => {
     console.log(hashedPassword);
     const user = { name: req.body.name, password: hashedPassword };
     users.push(user);
-    res.status(200).send('Added as a new user');
+    res.status(200).send("Added as a new user");
   } catch (error) {
-    res.status(500).send('Server Error!');
+    res.status(500).send("Server Error!");
   }
 });
 
-app.post("/users/login", (req, res) => {
+app.post("/users/login", async (req, res) => {
   //Authenticate User
   const user = users.find((user) => (user.name = req.body.name));
   if (user === null) {
@@ -48,11 +48,14 @@ app.post("/users/login", (req, res) => {
       .status(400)
       .send("The user is not registered, please register first");
   }
-  try{
-
-  } 
-  catch(error){
-    res.status(500).send('Server Error!')
+  try {
+    if (await bcrypt.compare(req.body.password, user.password)) {
+      res.status(400).send("Successfully Logged in");
+    } else {
+      res.status(400).send("Incorrect Credential !");
+    }
+  } catch (error) {
+    res.status(500).send("Server Error!");
   }
 });
 app.listen(3000);
