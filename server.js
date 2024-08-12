@@ -15,9 +15,14 @@ const posts = [
 ];
 app.get('/posts', (req, res) => {
   try {
-    console.log(res.status(200).json(posts));
+    res.status(200).json(posts);
   } catch (error) {
     res.status(400).json({message: error.message})
   }
+});
+
+
+app.get('login',(req, res)=>{
+
 });
 app.listen(3000);
