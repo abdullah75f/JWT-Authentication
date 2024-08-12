@@ -40,8 +40,15 @@ app.post("/users", async (req, res) => {
   }
 });
 
-app.post("login", (req, res) => {
+app.post("/users/login", (req, res) => {
   //Authenticate User
+  const user = users.find((user) => (user.name = req.body.name));
+  if (user === null) {
+    return req
+      .status(400)
+      .send("The user is not registered, please register first");
+  }
   const username = req.body.name;
+  const password = req.body.password;
 });
 app.listen(3000);
