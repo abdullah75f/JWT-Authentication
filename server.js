@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-app.get("/posts", (req, res) => {
+
   const posts = [
     {
       username: "kyle",
@@ -10,7 +10,10 @@ app.get("/posts", (req, res) => {
     {
       username: "Jim",
       title: "Post 2",
-    },
+    }
   ];
+  app.get("/posts", (req, res) => {
+    console.log(json(posts));
+    
 });
 app.listen(3000);
