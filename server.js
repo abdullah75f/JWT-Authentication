@@ -34,9 +34,9 @@ app.post("/users", async (req, res) => {
     console.log(hashedPassword);
     const user = { name: req.body.name, password: hashedPassword };
     users.push(user);
-    res.status(200).send();
+    res.status(200).send('Added as a new user');
   } catch (error) {
-    res.status(500).send();
+    res.status(500).send('Server Error!');
   }
 });
 
@@ -48,7 +48,11 @@ app.post("/users/login", (req, res) => {
       .status(400)
       .send("The user is not registered, please register first");
   }
-  const username = req.body.name;
-  const password = req.body.password;
+  try{
+
+  } 
+  catch(error){
+    res.status(500).send('Server Error!')
+  }
 });
 app.listen(3000);
