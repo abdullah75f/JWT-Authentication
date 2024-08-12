@@ -40,9 +40,11 @@ app.post("/users", async (req, res) => {
   }
 });
 
+
+//Logging in
 app.post("/users/login", async (req, res) => {
   //Authenticate User
-  const user = users.find((user) => (user.name = req.body.name));
+  const user = users.find((user) => (user.name === req.body.name));
   if (user === null) {
     return req
       .status(400)
