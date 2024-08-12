@@ -13,16 +13,15 @@ const posts = [
     title: "Post 2",
   },
 ];
-app.get('/posts', (req, res) => {
+app.get("/posts", (req, res) => {
   try {
     res.status(200).json(posts);
   } catch (error) {
-    res.status(400).json({message: error.message})
+    res.status(400).json({ message: error.message });
   }
 });
 
-
-app.get('login',(req, res)=>{
-
+app.get("login", (req, res) => {
+  //Authenticate User
 });
 app.listen(3000);
