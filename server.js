@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const jwt = require("jsonwebtoken");
@@ -39,21 +39,21 @@ app.post("/users", async (req, res) => {
   }
 });
 
-
 //Logging in
 app.post("/users/login", async (req, res) => {
   //Authenticate User
-  const user = users.find((user) => (user.name === req.body.name));
+  const user = users.find((user) => user.name === req.body.name);
   if (user === null) {
-    return req.status(400).send("The user is not registered, please register first");
+    return req
+      .status(400)
+      .send("The user is not registered, please register first");
   }
   try {
     if (await bcrypt.compare(req.body.password, user.password)) {
-     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-     res.json({accessToken:accessToken});
+      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+      res.json({ accessToken: accessToken });
       // res.status(400).send("Successfully Logged in");
-    } 
-    else {
+    } else {
       res.status(400).send("Incorrect Credential !");
     }
   } catch (error) {
